@@ -1,0 +1,17 @@
+<!--film.wxml（用于编写页面的结构）-->
+<view class="container">
+  <view wx:if="{{loading}}" class="loading">
+  </view>
+  <view wx:if="{{!loading}}">
+    <view class="film" wx:for="{{films}}">
+      <image class="poster" src="{{item.img}}"></image>
+      <view class="info">
+        <view class="title">{{item.nm}}</view>
+        <view class="score">评分：{{item.sc}}</view>
+        <view class="coming">上映：{{item.comingTitle}}</view>
+        <view class="show">排片：{{item.showInfo}}</view>
+        <view class="actor">主演：{{item.star}}</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,63 @@
+/**search.wxss**/
+.search-box {
+  display: flex;
+  align-items: center;
+  padding: 16rpx;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10rpx;
+  border: 1rpx solid #ccc;
+  border-radius: 4rpx;
+  margin-right: 16rpx;
+}
+
+.search-btn {
+  padding: 10rpx;
+  background-color: #4c4c4c;
+  color: #fff;
+  border-radius: 4rpx;
+}
+
+.result-list {
+  margin-top: 32rpx;
+}
+
+.result-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16rpx;
+  border-bottom: 1px solid #ddd;
+}
+
+.movie-img {
+  width: 225rpx;
+  height: 318rpx;
+  margin-right: 16rpx;
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+}
+
+.movie-score {
+  font-size: 28rpx;
+  margin-bottom: 8rpx;
+}
+
+.movie-pub {
+  font-size: 28rpx;
+  margin-bottom: 8rpx;
+}
+
+.movie-star {
+  font-size: 28rpx;
+}

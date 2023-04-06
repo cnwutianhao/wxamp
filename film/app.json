@@ -1,0 +1,36 @@
+{
+    "pages": [
+        "pages/film/film",
+        "pages/search/search"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "吴同学电影",
+        "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+      "color": "#bfbfbf",
+      "selectedColor": "#d81e06",
+      "list": [
+        {
+          "pagePath": "pages/film/film",
+          "text":"电影",
+          "color": "#bfbfbf",
+          "selectedColor": "#d81e06",
+          "iconPath": "images/film_normal.png",
+          "selectedIconPath": "images/film_selected.png"
+        },
+        {
+          "pagePath": "pages/search/search",
+          "text": "搜索",
+          "color": "#bfbfbf",
+          "selectedColor": "#d81e06",
+          "iconPath": "images/search_normal.png",
+          "selectedIconPath": "images/search_selected.png"
+        }
+      ]
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
+}
