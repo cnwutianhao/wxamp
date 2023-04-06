@@ -3,7 +3,7 @@
   <view wx:if="{{loading}}" class="loading">
   </view>
   <view wx:if="{{!loading}}">
-    <view class="film" wx:for="{{films}}">
+    <view class="film" wx:for="{{films}}" wx:key="id" bindtap="onFilmTap" data-film="{{item.id}}">
       <image class="poster" src="{{item.img}}"></image>
       <view class="info">
         <view class="title">{{item.nm}}</view>

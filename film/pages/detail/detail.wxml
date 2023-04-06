@@ -1,0 +1,10 @@
+<!--detail.wxml（用于编写页面的结构）-->
+<view class="container">
+  <image src="{{detailMovie.img}}" mode="aspectFill" class="cover"></image>
+  <view class="content">
+    <view class="title">{{detailMovie.nm}}</view>
+    <view class="score">{{detailMovie.sc}}分</view>
+    <view class="desc">{{detailMovie.star}}</view>
+    <view class="desc">{{detailMovie.rt}}上映</view>
+  </view>
+</view>

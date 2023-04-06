@@ -1,0 +1,39 @@
+/**detail.wxss（用于编写页面的样式）**/
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20rpx;
+}
+
+.cover {
+  width: 100%;
+  height: 500rpx;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 20rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.score {
+  font-size: 28rpx;
+  color: #ffcc33;
+  margin-bottom: 20rpx;
+}
+
+.desc {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+}

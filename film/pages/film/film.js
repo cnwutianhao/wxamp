@@ -25,5 +25,13 @@ Page({
         })
       }
     })
+  },
+
+  onFilmTap: function (e) {
+    var filmId = e.currentTarget.dataset.film
+    console.log(filmId)
+    wx.navigateTo({
+      url: '/pages/detail/detail?filmId=' + JSON.stringify(filmId),
+    })
   }
 })
