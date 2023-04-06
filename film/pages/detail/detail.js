@@ -28,5 +28,21 @@ Page({
         console.log(err)
       },
     })
+  },
+
+  // 发送给朋友
+  onShareAppMessage: function () {
+    return {
+      title: '吴同学看电影',
+      path: 'pages/detail/detail'
+    }
+  },
+
+  // 分享到朋友圈
+  onShareTimeline: function (res) {
+    return {
+      title: '吴同学看电影',
+      imageUrl: 'http://n.sinaimg.cn/sinacn20190816s/300/w700h400/20190816/c196-ichcymv8367951.jpg'
+    }
   }
 })

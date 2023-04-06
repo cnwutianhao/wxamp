@@ -7,7 +7,7 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "吴同学电影",
+        "navigationBarTitleText": "吴同学看电影",
         "navigationBarTextStyle": "black"
     },
     "tabBar": {
