@@ -7,7 +7,9 @@
 <!-- 显示搜索结果 -->
 <view class="result-list" wx:for="{{searchResult}}" wx:key="index" bindtap="onSearchTap" data-search="{{item.id}}">
   <view class="result-item">
-    <image src="{{item.img}}" class="movie-img"></image>
+    <view class="movie-img-container">
+      <image src="{{item.img}}" class="movie-img"></image>
+    </view>
     <view class="movie-info">
       <view class="movie-name">{{item.nm}}</view>
       <view class="movie-score">评分：{{item.sc}}</view>
