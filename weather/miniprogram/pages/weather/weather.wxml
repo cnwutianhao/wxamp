@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="location">定位</view>
+  <view class="realtime-temp">{{value.realtime.temp}}°</view>
+  <view class="info1">
+    <view class="realtime-weather">{{value.realtime.weather}}</view>
+    <view class="pm25-aqi">{{value.pm25.aqi}}</view>
+    <view class="pm25-quality">{{value.pm25.quality}}</view>
+  </view>
+  <view class="info2">
+    <view class="realtime-wD">{{value.realtime.wD}}</view>
+    <view class="realtime-wS">{{value.realtime.wS}}</view>
+    <view class="realtime-sD">湿度{{value.realtime.sD}}%</view>
+  </view>
+  <view class="wrapper">
+    <view class="today-item">
+      <text class="today-item-title">今天</text>
+      <text class="today-item-weather">{{value.weathers[0].temp_day_c}}°~{{value.weathers[0].temp_night_c}}° {{value.weathers[0].weather}}</text>
+    </view>
+    <view class="tomorrow-item">
+      <text class="tomorrow-item-title">明天</text>
+      <text class="tomorrow-item-weather">{{value.weathers[0].temp_day_c}}°~{{value.weathers[0].temp_night_c}}° {{value.weathers[1].weather}}</text>
+    </view>
+  </view>
+  <view class="life-index-title">生活指数</view>
+  <view class="life-index">
+    <view wx:for="{{value.indexes}}" wx:key="id" class="life-index-item">
+      <text class="life-index-level">{{item.level}}</text>
+      <text class="life-index-name">{{item.name}}</text>
+    </view>
+  </view>
+</view>

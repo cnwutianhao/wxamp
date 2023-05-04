@@ -1,0 +1,119 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 16rpx;
+}
+
+.info1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.location {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.realtime-temp {
+  font-size: 100px;
+}
+
+.realtime-weather {
+  font-size: 16px;
+  margin-right: 8rpx;
+}
+
+.pm25-aqi {
+  font-size: 16px;
+}
+
+.pm25-quality {
+  font-size: 16px;
+}
+
+.info2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16rpx;
+}
+
+.realtime-wD {
+  font-size: 16px;
+}
+
+.realtime-wS {
+  font-size: 16px;
+  margin-right: 8rpx;
+}
+
+.realtime-sD {
+  font-size: 16px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 16rpx;
+}
+
+.today-item {
+  width: 50%;
+  height: 100rpx;
+  border: 1px solid #cccccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tomorrow-item {
+  width: 50%;
+  height: 100rpx;
+  border: 1px solid #cccccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.life-index-title {
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 16rpx;
+  margin-left: 16rpx;
+  text-align: left;
+}
+
+.life-index {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 16rpx;
+}
+
+.life-index-item {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: calc(100% / 3 );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #cccccc;
+}
+
+.life-index-level {
+  font-size: 16px;
+}
+
+.life-index-name {
+  font-size: 14px;
+  font-weight: lighter;
+}
