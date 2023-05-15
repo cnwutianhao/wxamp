@@ -1,16 +1,22 @@
+<wxs src="../../utils/capture.wxs" module="tools" />
+
 <view class="container">
   <view class="location">定位</view>
+
   <view class="realtime-temp">{{value.realtime.temp}}°</view>
+
   <view class="info1">
     <view class="realtime-weather">{{value.realtime.weather}}</view>
     <view class="pm25-aqi">{{value.pm25.aqi}}</view>
     <view class="pm25-quality">{{value.pm25.quality}}</view>
   </view>
+
   <view class="info2">
     <view class="realtime-wD">{{value.realtime.wD}}</view>
     <view class="realtime-wS">{{value.realtime.wS}}</view>
     <view class="realtime-sD">湿度{{value.realtime.sD}}%</view>
   </view>
+
   <view class="wrapper">
     <view class="today-item">
       <text class="today-item-title">今天</text>
@@ -21,6 +27,29 @@
       <text class="tomorrow-item-weather">{{value.weathers[0].temp_day_c}}°~{{value.weathers[0].temp_night_c}}° {{value.weathers[1].weather}}</text>
     </view>
   </view>
+
+  <view class="weather-hourly-title">24小时预报</view>
+  <scroll-view scroll-x="true" class="weather-hourly-list">
+    <block wx:for="{{value.weatherDetailsInfo.weather3HoursDetailsInfos}}" wx:key="index">
+      <view class="weather-hourly-item">
+        <view class="weather-hourly-time">{{tools.subTime(item.startTime)}}</view>
+        <view class="weather-hourly-weather">{{item.weather}}</view>
+        <view class="weather-hourly-temp">{{item.highestTemperature}}℃</view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <view class="weather-day-title">7天预报</view>
+  <scroll-view scroll-y="true" class="weather-day-list">
+    <block wx:for="{{value.weathers}}" wx:key="index">
+      <view class="weather-day-item">
+        <view class="weather-day-date">{{item.week}}({{tools.subDate(item.date)}})</view>
+        <view class="weather-day-weather">{{item.weather}}</view>
+        <view class="weather-day-temp">{{item.temp_day_c}}℃ / {{item.temp_night_c}}℃</view>
+      </view>
+    </block>
+  </scroll-view>
+
   <view class="life-index-title">生活指数</view>
   <view class="life-index">
     <view wx:for="{{value.indexes}}" wx:key="id" class="life-index-item">

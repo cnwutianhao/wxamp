@@ -22,16 +22,16 @@
 }
 
 .realtime-weather {
-  font-size: 16px;
+  font-size: 20px;
   margin-right: 8rpx;
 }
 
 .pm25-aqi {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .pm25-quality {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .info2 {
@@ -42,16 +42,16 @@
 }
 
 .realtime-wD {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .realtime-wS {
-  font-size: 16px;
+  font-size: 18px;
   margin-right: 8rpx;
 }
 
 .realtime-sD {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .wrapper {
@@ -71,6 +71,14 @@
   align-items: center;
 }
 
+.today-item-title {
+  font-size: 20px;
+}
+
+.today-item-weather {
+  font-size: 20px;
+}
+
 .tomorrow-item {
   width: 50%;
   height: 100rpx;
@@ -81,12 +89,89 @@
   align-items: center;
 }
 
+.tomorrow-item-title {
+  font-size: 20px;
+}
+
+.tomorrow-item-weather {
+  font-size: 20px;
+}
+
+.weather-hourly-title {
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  text-align: left;
+}
+
+.weather-hourly-list {
+  white-space: nowrap;
+}
+
+.weather-hourly-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10rpx;
+  box-sizing: border-box;
+}
+
+.weather-hourly-time {
+  font-size: 20px;
+}
+
+.weather-hourly-weather {
+  font-size: 20px;
+}
+
+.weather-hourly-temp {
+  font-size: 20px;
+}
+
+.weather-day-title {
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  text-align: left;
+}
+
+.weather-day-item {
+  display: flex;
+  align-items: center;
+  margin-top: 16rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+}
+
+.weather-day-date {
+  display: inline-block;
+  text-align: left;
+  font-size: 20px;
+}
+
+.weather-day-weather {
+  display: inline-block;
+  text-align: center;
+  flex: 1;
+  font-size: 20px;
+}
+
+.weather-day-temp {
+  display: inline-block;
+  text-align: right;
+  font-size: 20px;
+}
+
 .life-index-title {
   width: 100%;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: bold;
-  margin-top: 16rpx;
-  margin-left: 16rpx;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
   text-align: left;
 }
 
@@ -100,7 +185,7 @@
 .life-index-item {
   width: 100%;
   box-sizing: border-box;
-  max-width: calc(100% / 3 );
+  max-width: calc(100% / 3);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,10 +195,10 @@
 }
 
 .life-index-level {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .life-index-name {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: lighter;
 }

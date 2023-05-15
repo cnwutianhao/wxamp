@@ -13,6 +13,24 @@ interface Weather {
   ws: string;
 }
 
+interface Weather3HoursDetailsInfo {
+  endTime: string;
+  highestTemperature: string;
+  img: string;
+  isRainFall: string;
+  lowerestTemperature: string;
+  precipitation: string;
+  startTime: string;
+  wd: string;
+  weather: string;
+  ws: string;
+}
+
+interface WeatherDetailsInfo {
+  publishTime: string;
+  weather3HoursDetailsInfos: Weather3HoursDetailsInfo[];
+}
+
 interface Realtime {
   sD: string;
   sendibleTemp: string;
@@ -69,6 +87,7 @@ interface Value {
   pm25: PM25;
   provinceName: string;
   realtime: Realtime;
+  weatherDetailsInfo: WeatherDetailsInfo;
   weathers: Weather[];
 }
 
