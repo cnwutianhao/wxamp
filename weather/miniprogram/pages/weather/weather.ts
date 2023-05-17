@@ -91,7 +91,13 @@ interface Value {
   weathers: Weather[];
 }
 
+interface Location {
+  province: string;
+  city: string;
+}
+
 interface WeatherPageData {
+  location: Location;
   value: Value;
 }
 
@@ -101,17 +107,84 @@ Page({
   },
 
   onLoad: function () {
-    this.loadData();
+    this.getLongitudeAndLatitude();
   },
 
-  loadData: function () {
+  // 获取经纬度
+  getLongitudeAndLatitude: function () {
+    var that = this;
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userLocation']) {
+          wx.authorize({
+            scope: 'scope.userLocation',
+            success() {
+              // 用户已经同意获取地理位置信息
+              wx.getLocation({
+                type: 'wgs84',
+                success(res) {
+                  const latitude = res.latitude;    // 纬度，浮点数，范围为90 ~ -90
+                  const longitude = res.longitude;  // 经度，浮点数，范围为180 ~ -180。
+                  console.log(`latitude: ${latitude}, longitude: ${longitude}`);
+                  that.getLocation(latitude, longitude);
+                }
+              });
+            },
+            fail() {
+              // 用户拒绝了授权请求
+              console.log('用户拒绝了获取地理位置信息的授权请求');
+            }
+          });
+        } else {
+          // 用户已经同意获取地理位置信息
+          wx.getLocation({
+            type: 'wgs84',
+            success(res) {
+              const latitude = res.latitude;    // 纬度，浮点数，范围为90 ~ -90
+              const longitude = res.longitude;  // 经度，浮点数，范围为180 ~ -180。
+              console.log(`latitude: ${latitude}, longitude: ${longitude}`);
+              that.getLocation(latitude, longitude);
+            }
+          });
+        }
+      }
+    });
+  },
+
+  // 获取当前位置
+  getLocation: function (latitude: number, longitude: number) {
+    var that = this;
+    const ak = 'FpGacYmfVbQhNHO51YYGS4v3LR7cgS8P';
+    const url = `https://api.map.baidu.com/geocoder/v2/?ak=${ak}&location=${latitude},${longitude}&output=json&pois=1`;
+
+    wx.request({
+      url: url,
+      success(res: { data: { result: { addressComponent: { province: string, city: string } } } }) {
+        console.log(res.data.result.addressComponent.province);
+        console.log(res.data.result.addressComponent.city);
+        that.loadData(res.data.result.addressComponent.province, res.data.result.addressComponent.city);
+      },
+      fail: (err) => {
+        console.error("API request failed: ", err);
+      },
+    });
+  },
+
+  // 获取城市ID
+  getCityId: function () {
+  },
+
+  // 获取天气数据
+  loadData: function (province: string, city: string) {
     wx.request({
       url: "https://aider.meizu.com/app/weather/listWeather?cityIds=101070201",
       success: (res) => {
         const data = res.data as { code: string; value: Value[] };
         if (data.code === "200") {
+          const location: Location = { province: province, city: city, };
           const value: Value = data.value[0];
           this.setData({
+            location: location,
             value: value,
           });
         }

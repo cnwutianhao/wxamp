@@ -1,7 +1,7 @@
 <wxs src="../../utils/capture.wxs" module="tools" />
 
 <view class="container">
-  <view class="location">定位</view>
+  <view class="location">{{location.province}}{{location.city}}</view>
 
   <view class="realtime-temp">{{value.realtime.temp}}°</view>
 
