@@ -160,9 +160,11 @@ Page({
     wx.request({
       url: url,
       success(res: { data: { result: { addressComponent: { province: string, city: string } } } }) {
-        console.log(res.data.result.addressComponent.province);
-        console.log(res.data.result.addressComponent.city);
-        that.loadData(res.data.result.addressComponent.province, res.data.result.addressComponent.city);
+        const province = res.data.result.addressComponent.province;
+        const city = res.data.result.addressComponent.city;
+        console.log(province);
+        console.log(city);
+        that.getCityId(province, city);
       },
       fail: (err) => {
         console.error("API request failed: ", err);
@@ -171,13 +173,31 @@ Page({
   },
 
   // 获取城市ID
-  getCityId: function () {
+  getCityId: function (p: string, c: string) {
+    var that = this;
+    let jsonData = require('../../data/cities');
+    const provinces = jsonData.cities.provinces;
+    for (const province of provinces) {
+      if (province.provinceName === p) {
+        const citys = province.citys;
+        for (const city of citys) {
+          if (city.cityName === c) {
+            console.log(city.cityId);
+            that.loadData(p, c, city.cityId);
+            break;
+          }
+        }
+        break;
+      }
+    }
   },
 
   // 获取天气数据
-  loadData: function (province: string, city: string) {
+  loadData: function (province: string, city: string, cityId: string) {
+    const url = `https://aider.meizu.com/app/weather/listWeather?cityIds=${cityId}`;
+
     wx.request({
-      url: "https://aider.meizu.com/app/weather/listWeather?cityIds=101070201",
+      url: url,
       success: (res) => {
         const data = res.data as { code: string; value: Value[] };
         if (data.code === "200") {
