@@ -6,19 +6,29 @@
   padding-top: 16rpx;
 }
 
-.info1 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .location {
   font-size: 24px;
   font-weight: bold;
 }
 
+.realtime-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .realtime-temp {
   font-size: 100px;
+}
+
+.realtime-degree {
+  font-size: 50px;
+}
+
+.info1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .realtime-weather {
@@ -28,6 +38,7 @@
 
 .pm25-aqi {
   font-size: 20px;
+  margin-right: 8rpx;
 }
 
 .pm25-quality {

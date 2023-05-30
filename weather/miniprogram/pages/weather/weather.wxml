@@ -3,7 +3,10 @@
 <view class="container">
   <view class="location">{{location.province}}{{location.city}}</view>
 
-  <view class="realtime-temp">{{value.realtime.temp}}°</view>
+  <view class="realtime-info">
+    <view class="realtime-temp">{{value.realtime.temp}}</view>
+    <view class="realtime-degree">°</view>
+  </view>
 
   <view class="info1">
     <view class="realtime-weather">{{value.realtime.weather}}</view>
