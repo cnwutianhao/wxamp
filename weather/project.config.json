@@ -16,7 +16,8 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "condition": false
+    "condition": false,
+    "minified": true
   },
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
