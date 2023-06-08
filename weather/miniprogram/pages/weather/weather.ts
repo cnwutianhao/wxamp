@@ -107,6 +107,12 @@ Page({
   },
 
   onLoad: function () {
+    // 设置导航栏颜色
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',      // 前景色（包括标题、返回按钮等）
+      backgroundColor: '#87ceeb'  // 背景色
+    });
+
     this.getLongitudeAndLatitude();
   },
 

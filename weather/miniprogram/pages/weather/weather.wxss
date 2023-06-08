@@ -1,3 +1,7 @@
+page {
+  background-color: rgb(135, 206, 235);
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -75,7 +79,7 @@
 .today-item {
   width: 50%;
   height: 100rpx;
-  border: 1px solid #cccccc;
+  border: 1px solid #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -93,7 +97,7 @@
 .tomorrow-item {
   width: 50%;
   height: 100rpx;
-  border: 1px solid #cccccc;
+  border: 1px solid #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -202,7 +206,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  border: 1px solid #cccccc;
+  border: 1px solid #ffffff;
 }
 
 .life-index-level {
