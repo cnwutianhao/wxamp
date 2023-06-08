@@ -42,10 +42,10 @@
     </block>
   </scroll-view>
 
-  <view class="weather-day-title">7天预报</view>
+  <view class="weather-day-title">5天预报</view>
   <scroll-view scroll-y="true" class="weather-day-list">
     <block wx:for="{{value.weathers}}" wx:key="index">
-      <view class="weather-day-item">
+      <view wx:if="{{index > 0 && index < value.weathers.length - 1}}" class="weather-day-item">
         <view class="weather-day-date">{{item.week}}({{tools.subDate(item.date)}})</view>
         <view class="weather-day-weather">{{item.weather}}</view>
         <view class="weather-day-temp">{{item.temp_day_c}}℃ / {{item.temp_night_c}}℃</view>
