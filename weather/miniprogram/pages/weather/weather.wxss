@@ -116,9 +116,9 @@ page {
   width: 100%;
   font-size: 24px;
   font-weight: bold;
-  margin-top: 20rpx;
-  margin-left: 20rpx;
+  padding: 20rpx 0 0 20rpx ;
   text-align: left;
+  box-sizing: border-box;
 }
 
 .weather-hourly-list {
@@ -149,9 +149,9 @@ page {
   width: 100%;
   font-size: 24px;
   font-weight: bold;
-  margin-top: 20rpx;
-  margin-left: 20rpx;
+  padding: 20rpx 0 0 20rpx ;
   text-align: left;
+  box-sizing: border-box;
 }
 
 .weather-day-item {
@@ -185,9 +185,9 @@ page {
   width: 100%;
   font-size: 24px;
   font-weight: bold;
-  margin-top: 20rpx;
-  margin-left: 20rpx;
+  padding: 20rpx 0 0 20rpx ;
   text-align: left;
+  box-sizing: border-box;
 }
 
 .life-index {
