@@ -1,7 +1,7 @@
 <wxs src="../../utils/capture.wxs" module="tools" />
 
-<view class="container">
-  <view class="location">{{location.province}}{{location.city}}</view>
+<view class="container" style="background-image: url({{image}});background-position:center;">
+  <view class="location">{{location.city}}</view>
 
   <view class="realtime-info">
     <view class="realtime-temp">{{value.realtime.temp}}</view>

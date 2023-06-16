@@ -104,15 +104,10 @@ interface WeatherPageData {
 Page({
   data: {
     value: {} as Value,
+    image: ""
   },
 
   onLoad: function () {
-    // 设置导航栏颜色
-    wx.setNavigationBarColor({
-      frontColor: '#ffffff',      // 前景色（包括标题、返回按钮等）
-      backgroundColor: '#87ceeb'  // 背景色
-    });
-
     this.getLongitudeAndLatitude();
   },
 
@@ -202,6 +197,7 @@ Page({
   loadData: function (province: string, city: string, cityId: string) {
     const url = `https://aider.meizu.com/app/weather/listWeather?cityIds=${cityId}`;
 
+    var that = this;
     wx.request({
       url: url,
       success: (res) => {
@@ -209,9 +205,25 @@ Page({
         if (data.code === "200") {
           const location: Location = { province: province, city: city, };
           const value: Value = data.value[0];
+
+          if (value.realtime.weather.indexOf("晴") != -1) {
+            that.data.image = "../../images/weather_sun.png"
+          } else if (value.realtime.weather.indexOf("云") != -1) {
+            that.data.image = "../../images/weather_cloud.png"
+          } else if (value.realtime.weather.indexOf("阴") != -1) {
+            that.data.image = "../../images/weather_overcast.png"
+          } else if (value.realtime.weather.indexOf("雨") != -1) {
+            that.data.image = "../../images/weather_rain.png"
+          } else if (value.realtime.weather.indexOf("雪") != -1) {
+            that.data.image = "../../images/weather_snow.png"
+          } else {
+            that.data.image = "../../images/weather_sun.png"
+          }
+
           this.setData({
             location: location,
             value: value,
+            image: that.data.image
           });
         }
       },
