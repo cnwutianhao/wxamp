@@ -206,18 +206,19 @@ Page({
           const location: Location = { province: province, city: city, };
           const value: Value = data.value[0];
 
+
           if (value.realtime.weather.indexOf("晴") != -1) {
-            that.data.image = "../../images/weather_sun.png"
+            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/100d.png"
           } else if (value.realtime.weather.indexOf("云") != -1) {
-            that.data.image = "../../images/weather_cloud.png"
+            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/101d.png"
           } else if (value.realtime.weather.indexOf("阴") != -1) {
-            that.data.image = "../../images/weather_overcast.png"
+            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/104d.png"
           } else if (value.realtime.weather.indexOf("雨") != -1) {
-            that.data.image = "../../images/weather_rain.png"
+            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/300d.png"
           } else if (value.realtime.weather.indexOf("雪") != -1) {
-            that.data.image = "../../images/weather_snow.png"
+            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/400d.png"
           } else {
-            that.data.image = "../../images/weather_sun.png"
+            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/100d.png"
           }
 
           this.setData({
