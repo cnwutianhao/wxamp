@@ -27,7 +27,7 @@
     </view>
     <view class="tomorrow-item">
       <text class="tomorrow-item-title">明天</text>
-      <text class="tomorrow-item-weather">{{value.weathers[0].temp_day_c}}°~{{value.weathers[0].temp_night_c}}° {{value.weathers[1].weather}}</text>
+      <text class="tomorrow-item-weather">{{value.weathers[1].temp_day_c}}°~{{value.weathers[1].temp_night_c}}° {{value.weathers[1].weather}}</text>
     </view>
   </view>
 
