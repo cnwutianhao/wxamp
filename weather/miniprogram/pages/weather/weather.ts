@@ -206,19 +206,34 @@ Page({
           const location: Location = { province: province, city: city, };
           const value: Value = data.value[0];
 
-
-          if (value.realtime.weather.indexOf("晴") != -1) {
-            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/100d.png"
-          } else if (value.realtime.weather.indexOf("云") != -1) {
-            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/101d.png"
-          } else if (value.realtime.weather.indexOf("阴") != -1) {
-            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/104d.png"
-          } else if (value.realtime.weather.indexOf("雨") != -1) {
-            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/300d.png"
-          } else if (value.realtime.weather.indexOf("雪") != -1) {
-            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/400d.png"
+          const sunDownTime = this.parseTime(value.weathers[0].sun_down_time);
+          const sunRiseTime = this.parseTime(value.weathers[0].sun_rise_time);
+          const currentTime = new Date();
+          const isNightTime = this.isTimeInRange(currentTime, sunDownTime, sunRiseTime);
+          if (value.realtime.weather.indexOf("晴") !== -1) {
+            that.data.image = isNightTime
+              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/100n.png"
+              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/100d.png";
+          } else if (value.realtime.weather.indexOf("云") !== -1) {
+            that.data.image = isNightTime
+              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/101n.png"
+              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/101d.png";
+          } else if (value.realtime.weather.indexOf("阴") !== -1) {
+            that.data.image = isNightTime
+              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/104n.png"
+              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/104d.png";
+          } else if (value.realtime.weather.indexOf("雨") !== -1) {
+            that.data.image = isNightTime
+              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/300n.png"
+              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/300d.png";
+          } else if (value.realtime.weather.indexOf("雪") !== -1) {
+            that.data.image = isNightTime
+              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/400n.png"
+              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/400d.png";
           } else {
-            that.data.image = "https://widget-s.qweather.net/img/plugin/190516/bg/view/100d.png"
+            that.data.image = isNightTime
+              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/100n.png"
+              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/100d.png";
           }
 
           this.setData({
@@ -232,5 +247,22 @@ Page({
         console.error("API request failed: ", err);
       },
     });
+  },
+
+  parseTime: function (timeString: string): Date {
+    const [hours, minutes] = timeString.split(":").map(Number);
+    const parsedTime = new Date();
+    parsedTime.setHours(hours, minutes);
+    return parsedTime;
+  },
+
+  isTimeInRange: function (time: Date, startTime: Date, endTime: Date): boolean {
+    if (endTime < startTime) {
+      // 跨越了凌晨，判断时间是否在开始时间之后或者结束时间之前
+      return time >= startTime || time <= endTime;
+    } else {
+      // 同一天，判断时间是否在开始时间之后且结束时间之前
+      return time >= startTime && time <= endTime;
+    }
   },
 });
