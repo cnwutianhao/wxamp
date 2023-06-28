@@ -265,4 +265,12 @@ Page({
       return time >= startTime && time <= endTime;
     }
   },
+
+  // 发送给朋友
+  onShareAppMessage: function () {
+    return {
+      title: '吴同学观天气',
+      path: 'pages/weather/weather'
+    }
+  },
 });
