@@ -121,7 +121,8 @@ interface WeatherPageData {
 Page({
   data: {
     value: {} as Value,
-    image: ""
+    image: "",
+    loading: true
   },
 
   onLoad: function () {
@@ -131,6 +132,7 @@ Page({
   // 获取经纬度
   getLongitudeAndLatitude: function () {
     var that = this;
+    wx.showLoading({ title: '加载中' });
     wx.getSetting({
       success(res) {
         if (!res.authSetting['scope.userLocation']) {
@@ -255,6 +257,8 @@ Page({
       success: (res) => {
         const data = res.data as { code: string; value: Value[] };
         if (data.code === "200") {
+          wx.hideLoading();
+
           const location: Location = { province: province, city: city };
           const value: Value = data.value[0];
 
@@ -293,7 +297,8 @@ Page({
             current: currentData,
             hour24: hour24,
             value: value,
-            image: that.data.image
+            image: that.data.image,
+            loading: false
           });
         }
       },

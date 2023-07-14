@@ -1,6 +1,7 @@
 <wxs src="../../utils/capture.wxs" module="tools" />
 
-<view class="container" style="background-image: url({{image}});background-position:center;">
+<view wx:if="{{loading}}" class="loading"></view>
+<view wx:else class="container" style="background-image: url({{image}});background-position:center;">
   <view class="location">{{location.city}}</view>
 
   <view class="realtime-info">
