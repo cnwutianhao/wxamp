@@ -51,12 +51,6 @@
   text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000;
 }
 
-.pm25-quality {
-  font-size: 20px;
-  color: #ffffff;
-  text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000;
-}
-
 .info2 {
   display: flex;
   flex-wrap: wrap;
@@ -257,7 +251,7 @@
 }
 
 .life-index-name {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: lighter;
   color: #ffffff;
   text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000;

@@ -96,8 +96,25 @@ interface Location {
   city: string;
 }
 
+interface Hour24 {
+  Fpredict_hour: string;
+  Fcondition: string;
+  Ftemp: string;
+}
+
+interface CurrentWeather {
+  aqiValue: string;
+  humidity: string;
+  condition: string;
+  windDir: string;
+  windLevel: string;
+  temp: string;
+}
+
 interface WeatherPageData {
   location: Location;
+  currentWeather: CurrentWeather;
+  hour24: Hour24[];
   value: Value;
 }
 
@@ -184,7 +201,8 @@ Page({
         for (const city of citys) {
           if (city.cityName === c) {
             console.log(city.cityId);
-            that.loadData(p, c, city.cityId);
+            console.log(city.mojiCityId);
+            that.loadCurrentWeatherData(p, c, city.cityId, city.mojiCityId);
             break;
           }
         }
@@ -193,8 +211,42 @@ Page({
     }
   },
 
+  // 获取当前天气
+  loadCurrentWeatherData: function (province: string, city: string, cityId: string, mojiCityId: string) {
+    const url = `https://co.moji.com/api/weather1/weather?city=${mojiCityId}`;
+
+    var that = this;
+    wx.request({
+      url: url,
+      success(res: { data: { data: CurrentWeather } }) {
+        const currentData = res.data.data;
+        that.loadHour24Data(province, city, cityId, mojiCityId, currentData);
+      },
+      fail: (err) => {
+        console.error("API request failed: ", err);
+      },
+    });
+  },
+
+  // 获取24小时数据
+  loadHour24Data: function (province: string, city: string, cityId: string, mojiCityId: string, currentData: CurrentWeather) {
+    const url = `https://m.moji.com/index/getHour24/${mojiCityId}`;
+
+    var that = this;
+    wx.request({
+      url: url,
+      success(res: { data: { hour24: Hour24[] } }) {
+        const predictHour24 = res.data.hour24;
+        that.loadData(province, city, cityId, currentData, predictHour24);
+      },
+      fail: (err) => {
+        console.error("API request failed: ", err);
+      },
+    });
+  },
+
   // 获取天气数据
-  loadData: function (province: string, city: string, cityId: string) {
+  loadData: function (province: string, city: string, cityId: string, currentData: CurrentWeather, hour24: Hour24[]) {
     const url = `https://aider.meizu.com/app/weather/listWeather?cityIds=${cityId}`;
 
     var that = this;
@@ -203,30 +255,30 @@ Page({
       success: (res) => {
         const data = res.data as { code: string; value: Value[] };
         if (data.code === "200") {
-          const location: Location = { province: province, city: city, };
+          const location: Location = { province: province, city: city };
           const value: Value = data.value[0];
 
           const sunDownTime = this.parseTime(value.weathers[0].sun_down_time);
           const sunRiseTime = this.parseTime(value.weathers[0].sun_rise_time);
           const currentTime = new Date();
           const isNightTime = this.isTimeInRange(currentTime, sunDownTime, sunRiseTime);
-          if (value.realtime.weather.indexOf("晴") !== -1) {
+          if (currentData.condition.indexOf("晴") !== -1) {
             that.data.image = isNightTime
               ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/100n.png"
               : "https://widget-s.qweather.net/img/plugin/190516/bg/view/100d.png";
-          } else if (value.realtime.weather.indexOf("云") !== -1) {
+          } else if (currentData.condition.indexOf("云") !== -1) {
             that.data.image = isNightTime
               ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/101n.png"
               : "https://widget-s.qweather.net/img/plugin/190516/bg/view/101d.png";
-          } else if (value.realtime.weather.indexOf("阴") !== -1) {
+          } else if (currentData.condition.indexOf("阴") !== -1) {
             that.data.image = isNightTime
               ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/104n.png"
               : "https://widget-s.qweather.net/img/plugin/190516/bg/view/104d.png";
-          } else if (value.realtime.weather.indexOf("雨") !== -1) {
+          } else if (currentData.condition.indexOf("雨") !== -1) {
             that.data.image = isNightTime
               ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/300n.png"
               : "https://widget-s.qweather.net/img/plugin/190516/bg/view/300d.png";
-          } else if (value.realtime.weather.indexOf("雪") !== -1) {
+          } else if (currentData.condition.indexOf("雪") !== -1) {
             that.data.image = isNightTime
               ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/400n.png"
               : "https://widget-s.qweather.net/img/plugin/190516/bg/view/400d.png";
@@ -238,6 +290,8 @@ Page({
 
           this.setData({
             location: location,
+            current: currentData,
+            hour24: hour24,
             value: value,
             image: that.data.image
           });

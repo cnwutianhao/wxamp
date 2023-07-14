@@ -4,20 +4,19 @@
   <view class="location">{{location.city}}</view>
 
   <view class="realtime-info">
-    <view class="realtime-temp">{{value.realtime.temp}}</view>
+    <view class="realtime-temp">{{current.temp}}</view>
     <view class="realtime-degree">°</view>
   </view>
 
   <view class="info1">
-    <view class="realtime-weather">{{value.realtime.weather}}</view>
-    <view class="pm25-aqi">{{value.pm25.aqi}}</view>
-    <view class="pm25-quality">{{value.pm25.quality}}</view>
+    <view class="realtime-weather">{{current.condition}}，</view>
+    <view class="pm25-aqi">AQI {{current.aqiValue}}</view>
   </view>
 
   <view class="info2">
-    <view class="realtime-wD">{{value.realtime.wD}}</view>
-    <view class="realtime-wS">{{value.realtime.wS}}</view>
-    <view class="realtime-sD">湿度{{value.realtime.sD}}%</view>
+    <view class="realtime-wD">{{current.windDir}}</view>
+    <view class="realtime-wS">{{current.windLevel}}级，</view>
+    <view class="realtime-sD">湿度{{current.humidity}}%</view>
   </view>
 
   <view class="wrapper">
@@ -33,11 +32,11 @@
 
   <view class="weather-hourly-title">24小时预报</view>
   <scroll-view scroll-x="true" class="weather-hourly-list">
-    <block wx:for="{{value.weatherDetailsInfo.weather3HoursDetailsInfos}}" wx:key="index">
+    <block wx:for="{{hour24}}" wx:key="index">
       <view class="weather-hourly-item">
-        <view class="weather-hourly-time">{{tools.subTime(item.startTime)}}</view>
-        <view class="weather-hourly-weather">{{item.weather}}</view>
-        <view class="weather-hourly-temp">{{item.highestTemperature}}℃</view>
+        <view class="weather-hourly-time">{{item.Fpredict_hour}}:00</view>
+        <view class="weather-hourly-weather">{{item.Fcondition}}</view>
+        <view class="weather-hourly-temp">{{item.Ftemp}}℃</view>
       </view>
     </block>
   </scroll-view>
