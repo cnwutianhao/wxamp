@@ -7,4 +7,6 @@
     <view class="desc">{{detailMovie.star}}</view>
     <view class="desc">{{detailMovie.rt}}上映</view>
   </view>
+  <video src="{{detailMovie.videourl}}" controls class="video"></video>
+  <view class="video-text">{{detailMovie.videoName}}</view>
 </view>
