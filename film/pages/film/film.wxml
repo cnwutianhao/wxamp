@@ -7,7 +7,10 @@
       <image class="poster" src="{{item.img}}"></image>
       <view class="info">
         <view class="title">{{item.nm}}</view>
-        <view class="score">评分：{{item.sc}}</view>
+        <view class="score">
+          <text class="score-label">评分：</text>
+          <text class="score-value">{{item.sc}}</text>
+        </view>
         <view class="coming">上映：{{item.comingTitle}}</view>
         <view class="show">排片：{{item.showInfo}}</view>
         <view class="actor">主演：{{item.star}}</view>

@@ -37,6 +37,10 @@
   margin-bottom: 8rpx;
 }
 
+.score-value {
+  color: #ffc600;
+}
+
 .coming {
   font-size: 28rpx;
   margin-bottom: 8rpx;

@@ -34,7 +34,7 @@
 
 .score {
   font-size: 28rpx;
-  color: #ffcc33;
+  color: #ffc600;
   margin-bottom: 20rpx;
 }
 
