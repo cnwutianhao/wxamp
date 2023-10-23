@@ -1,126 +1,103 @@
-interface Weather {
-  date: string;
-  img: string;
-  sun_down_time: string;
-  sun_rise_time: string;
-  temp_day_c: string;
-  temp_day_f: string;
-  temp_night_c: string;
-  temp_night_f: string;
-  wd: string;
-  weather: string;
-  week: string;
-  ws: string;
-}
-
-interface Weather3HoursDetailsInfo {
-  endTime: string;
-  highestTemperature: string;
-  img: string;
-  isRainFall: string;
-  lowerestTemperature: string;
-  precipitation: string;
-  startTime: string;
-  wd: string;
-  weather: string;
-  ws: string;
-}
-
-interface WeatherDetailsInfo {
-  publishTime: string;
-  weather3HoursDetailsInfos: Weather3HoursDetailsInfo[];
-}
-
-interface Realtime {
-  sD: string;
-  sendibleTemp: string;
-  temp: string;
-  time: string;
-  wD: string;
-  wS: string;
-  weather: string;
-}
-
-interface PM25 {
-  advice: string;
-  aqi: string;
-  citycount: number;
-  cityrank: number;
-  co: string;
-  color: string;
-  level: string;
-  no2: string;
-  o3: string;
-  pm10: string;
-  pm25: string;
-  quality: string;
-  so2: string;
-  timestamp: string;
-  upDateTime: string;
-}
-
-interface Index {
-  abbreviation: string;
-  alias: string;
-  content: string;
-  level: string;
+interface CitySearchItem {
+  cityId: string;
   name: string;
+  pname: string;
 }
 
-interface Alarm {
-  alarmContent: string;
-  alarmDesc: string;
-  alarmId: string;
-  alarmLevelNo: string;
-  alarmLevelNoDesc: string;
-  alarmType: string;
-  alarmTypeDesc: string;
-  precaution: string;
-  publishTime: string;
+interface CitySearchData {
+  city_list: CitySearchItem[];
 }
 
-interface Value {
-  alarms: Alarm[];
-  city: string;
-  cityid: number;
-  indexes: Index[];
-  pm25: PM25;
-  provinceName: string;
-  realtime: Realtime;
-  weatherDetailsInfo: WeatherDetailsInfo;
-  weathers: Weather[];
+interface Temperature {
+  value: number;
+  unit: string;
 }
 
-interface Location {
-  province: string;
-  city: string;
+interface WindDescription {
+  value: string;
+  unit: string;
+  winddir: string;
 }
 
-interface Hour24 {
-  Fpredict_hour: string;
-  Fcondition: string;
-  Ftemp: string;
-}
-
-interface CurrentWeather {
-  aqiValue: string;
+interface WeatherData {
+  weather_desc: string;
+  weather_desc_id: string;
+  temp: Temperature;
+  wind_desc: WindDescription;
+  direction: number;
   humidity: string;
-  condition: string;
-  windDir: string;
-  windLevel: string;
-  temp: string;
+  aqi: number;
+  aqi_desc: string;
+  aqi_num: number;
+  alerts: Alert[];
+  forecast_day: ForecastDay[];
+  hourly: Hourly[];
+  hourly_8: Hourly[];
+  sunset: {
+    cityid: number;
+    date: string;
+    sunrise: string;
+    sundown: string;
+    sunrise_hour: string;
+    sundown_hour: string;
+    is_day: number;
+  };
 }
 
-interface WeatherPageData {
-  location: Location;
-  currentWeather: CurrentWeather;
-  hour24: Hour24[];
-  value: Value;
+interface Alert {
+  update_time: string;
+  port_defense_id: string;
+  land_defense_id: string;
+  pub_time: string;
+  name: string;
+  title: string;
+  level: string;
+  infoid: number;
+  content: string;
+  rel_time: string;
+  type: string;
+  id: string;
+  name_num: number;
+  level_num: number;
+  date: string;
+  time: string;
+}
+
+interface ForecastDay {
+  weather_desc_day: string;
+  weather_desc_night: string;
+  temp_high: Temperature;
+  temp_low: Temperature;
+  icon_day: string;
+  icon_night: string;
+  wind_desc_day: WindDescription;
+  wind_desc_night: WindDescription;
+  predict_date: string;
+  predict_week: string;
+  aqi: {
+    pubTime: number;
+    value: number;
+    aqi_num: number;
+    aqi_name: string;
+  };
+}
+
+interface Hourly {
+  temperature: {
+    temp: Temperature;
+    icon: number;
+    hour: number;
+    condition: string;
+  };
+  wind: {
+    hour: number;
+    wind_desc: WindDescription;
+    direction: number;
+  };
 }
 
 Page({
   data: {
-    value: {} as Value,
     image: "",
     loading: true
   },
@@ -145,7 +122,6 @@ Page({
                 success(res) {
                   const latitude = res.latitude;    // 纬度，浮点数，范围为90 ~ -90
                   const longitude = res.longitude;  // 经度，浮点数，范围为180 ~ -180。
-                  console.log(`latitude: ${latitude}, longitude: ${longitude}`);
                   that.getLocation(latitude, longitude);
                 }
               });
@@ -162,7 +138,6 @@ Page({
             success(res) {
               const latitude = res.latitude;    // 纬度，浮点数，范围为90 ~ -90
               const longitude = res.longitude;  // 经度，浮点数，范围为180 ~ -180。
-              console.log(`latitude: ${latitude}, longitude: ${longitude}`);
               that.getLocation(latitude, longitude);
             }
           });
@@ -182,8 +157,6 @@ Page({
       success(res: { data: { result: { addressComponent: { province: string, city: string } } } }) {
         const province = res.data.result.addressComponent.province;
         const city = res.data.result.addressComponent.city;
-        console.log(province);
-        console.log(city);
         that.getCityId(province, city);
       },
       fail: (err) => {
@@ -195,34 +168,23 @@ Page({
   // 获取城市ID
   getCityId: function (p: string, c: string) {
     var that = this;
-    let jsonData = require('../../data/cities');
-    const provinces = jsonData.cities.provinces;
-    for (const province of provinces) {
-      if (province.provinceName === p) {
-        const citys = province.citys;
-        for (const city of citys) {
-          if (city.cityName === c) {
-            console.log(city.cityId);
-            console.log(city.mojiCityId);
-            that.loadCurrentWeatherData(p, c, city.cityId, city.mojiCityId);
+    const url = `https://co.moji.com/api/scity/citySearch?name=${c}&platform=moji`;
+
+    wx.request({
+      url: url,
+      method: 'GET',
+      success(res: { data: CitySearchData }) {
+        const data = res.data;
+        const cityList = data.city_list;
+        for (const city of cityList) {
+          const cityId = city.cityId;
+          const cityName = city.name;
+          const provinceName = city.pname;
+          if (provinceName === p && cityName === c) {
+            that.loadCurrentWeatherData(cityName, cityId);
             break;
           }
         }
-        break;
-      }
-    }
-  },
-
-  // 获取当前天气
-  loadCurrentWeatherData: function (province: string, city: string, cityId: string, mojiCityId: string) {
-    const url = `https://co.moji.com/api/weather1/weather?city=${mojiCityId}`;
-
-    var that = this;
-    wx.request({
-      url: url,
-      success(res: { data: { data: CurrentWeather } }) {
-        const currentData = res.data.data;
-        that.loadHour24Data(province, city, cityId, mojiCityId, currentData);
       },
       fail: (err) => {
         console.error("API request failed: ", err);
@@ -230,16 +192,16 @@ Page({
     });
   },
 
-  // 获取24小时数据
-  loadHour24Data: function (province: string, city: string, cityId: string, mojiCityId: string, currentData: CurrentWeather) {
-    const url = `https://m.moji.com/index/getHour24/${mojiCityId}`;
+  // 获取天气
+  loadCurrentWeatherData: function (city: string, cityId: string) {
+    const url = `https://co.moji.com/api/weather2/weather?city=${cityId}`;
 
     var that = this;
     wx.request({
       url: url,
-      success(res: { data: { hour24: Hour24[] } }) {
-        const predictHour24 = res.data.hour24;
-        that.loadData(province, city, cityId, currentData, predictHour24);
+      success(res: { data: { data: WeatherData } }) {
+        const currentWeatherData = res.data.data;
+        that.showData(city, currentWeatherData);
       },
       fail: (err) => {
         console.error("API request failed: ", err);
@@ -247,82 +209,38 @@ Page({
     });
   },
 
-  // 获取天气数据
-  loadData: function (province: string, city: string, cityId: string, currentData: CurrentWeather, hour24: Hour24[]) {
-    const url = `https://aider.meizu.com/app/weather/listWeather?cityIds=${cityId}`;
-
+  // 显示天气
+  showData: function (city: string, currentWeatherData: WeatherData) {
     var that = this;
-    wx.request({
-      url: url,
-      success: (res) => {
-        const data = res.data as { code: string; value: Value[] };
-        if (data.code === "200") {
-          wx.hideLoading();
 
-          const location: Location = { province: province, city: city };
-          const value: Value = data.value[0];
+    wx.hideLoading();
 
-          const sunDownTime = this.parseTime(value.weathers[0].sun_down_time);
-          const sunRiseTime = this.parseTime(value.weathers[0].sun_rise_time);
-          const currentTime = new Date();
-          const isNightTime = this.isTimeInRange(currentTime, sunDownTime, sunRiseTime);
-          if (currentData.condition.indexOf("晴") !== -1) {
-            that.data.image = isNightTime
-              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/100n.png"
-              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/100d.png";
-          } else if (currentData.condition.indexOf("云") !== -1) {
-            that.data.image = isNightTime
-              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/101n.png"
-              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/101d.png";
-          } else if (currentData.condition.indexOf("阴") !== -1) {
-            that.data.image = isNightTime
-              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/104n.png"
-              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/104d.png";
-          } else if (currentData.condition.indexOf("雨") !== -1) {
-            that.data.image = isNightTime
-              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/300n.png"
-              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/300d.png";
-          } else if (currentData.condition.indexOf("雪") !== -1) {
-            that.data.image = isNightTime
-              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/400n.png"
-              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/400d.png";
-          } else {
-            that.data.image = isNightTime
-              ? "https://widget-s.qweather.net/img/plugin/190516/bg/view/100n.png"
-              : "https://widget-s.qweather.net/img/plugin/190516/bg/view/100d.png";
-          }
+    // 天气预警
+    const alerts = currentWeatherData.alerts;
+    // 6日天气
+    const forecast_day = currentWeatherData.forecast_day;
+    // 24小时天气
+    const hourly = currentWeatherData.hourly;
+    // 日出日落
+    const sunset = currentWeatherData.sunset;
 
-          this.setData({
-            location: location,
-            current: currentData,
-            hour24: hour24,
-            value: value,
-            image: that.data.image,
-            loading: false
-          });
-        }
-      },
-      fail: (err) => {
-        console.error("API request failed: ", err);
-      },
-    });
-  },
-
-  parseTime: function (timeString: string): Date {
-    const [hours, minutes] = timeString.split(":").map(Number);
-    const parsedTime = new Date();
-    parsedTime.setHours(hours, minutes);
-    return parsedTime;
-  },
-
-  isTimeInRange: function (time: Date, startTime: Date, endTime: Date): boolean {
-    if (endTime < startTime) {
-      // 跨越了凌晨，判断时间是否在开始时间之后或者结束时间之前
-      return time >= startTime || time <= endTime;
+    // 天气背景
+    if (currentWeatherData.sunset.is_day === 1) {
+      that.data.image = `https://h5tq.moji.com/tianqi/assets/images/skin/day_${currentWeatherData.weather_desc_id}.jpg`;
     } else {
-      // 同一天，判断时间是否在开始时间之后且结束时间之前
-      return time >= startTime && time <= endTime;
+      that.data.image = `https://h5tq.moji.com/tianqi/assets/images/skin/night_${currentWeatherData.weather_desc_id}.jpg`;
     }
+
+    this.setData({
+      city: city,
+      weather: currentWeatherData,
+      alerts: alerts,
+      forecastDay: forecast_day,
+      hourly: hourly,
+      sunset: sunset,
+      image: that.data.image,
+      loading: false
+    });
   },
 
   // 发送给朋友

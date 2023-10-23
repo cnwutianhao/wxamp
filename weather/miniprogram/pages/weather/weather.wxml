@@ -2,62 +2,62 @@
 
 <view wx:if="{{loading}}" class="loading"></view>
 <view wx:else class="container" style="background-image: url({{image}});background-position:center;">
-  <view class="location">{{location.city}}</view>
+  <view class="location">{{city}}</view>
 
   <view class="realtime-info">
-    <view class="realtime-temp">{{current.temp}}</view>
+    <view class="realtime-temp">{{weather.temp.value}}</view>
     <view class="realtime-degree">°</view>
   </view>
 
   <view class="info1">
-    <view class="realtime-weather">{{current.condition}}，</view>
-    <view class="pm25-aqi">AQI {{current.aqiValue}}</view>
+    <view class="realtime-weather">{{weather.weather_desc}}，</view>
+    <view class="pm25-aqi">AQI {{weather.aqi}} {{weather.aqi_desc}}</view>
   </view>
 
   <view class="info2">
-    <view class="realtime-wD">{{current.windDir}}</view>
-    <view class="realtime-wS">{{current.windLevel}}级，</view>
-    <view class="realtime-sD">湿度{{current.humidity}}%</view>
+    <view class="realtime-wD">{{weather.wind_desc.winddir}}</view>
+    <view class="realtime-wS">{{weather.wind_desc.value}}{{weather.wind_desc.unit}}，</view>
+    <view class="realtime-sD">湿度{{weather.humidity}}</view>
   </view>
 
   <view class="wrapper">
     <view class="today-item">
       <text class="today-item-title">今天</text>
-      <text class="today-item-weather">{{value.weathers[0].temp_day_c}}°~{{value.weathers[0].temp_night_c}}° {{value.weathers[0].weather}}</text>
+      <text class="today-item-weather">{{forecastDay[0].temp_high.value}}℃ / {{forecastDay[0].temp_low.value}}℃ {{forecastDay[0].weather_desc_day}}</text>
     </view>
     <view class="tomorrow-item">
       <text class="tomorrow-item-title">明天</text>
-      <text class="tomorrow-item-weather">{{value.weathers[1].temp_day_c}}°~{{value.weathers[1].temp_night_c}}° {{value.weathers[1].weather}}</text>
+      <text class="tomorrow-item-weather">{{forecastDay[1].temp_high.value}}℃ / {{forecastDay[1].temp_low.value}}℃ {{forecastDay[1].weather_desc_day}}</text>
     </view>
   </view>
 
   <view class="weather-hourly-title">24小时预报</view>
   <scroll-view scroll-x="true" class="weather-hourly-list">
-    <block wx:for="{{hour24}}" wx:key="index">
+    <block wx:for="{{hourly}}" wx:key="index">
       <view class="weather-hourly-item">
-        <view class="weather-hourly-time">{{item.Fpredict_hour}}:00</view>
-        <view class="weather-hourly-weather">{{item.Fcondition}}</view>
-        <view class="weather-hourly-temp">{{item.Ftemp}}℃</view>
+        <view class="weather-hourly-time">{{item.temperature.hour}}:00</view>
+        <view class="weather-hourly-weather">{{item.temperature.condition}}</view>
+        <view class="weather-hourly-temp">{{item.temperature.temp.value}}℃</view>
       </view>
     </block>
   </scroll-view>
 
-  <view class="weather-day-title">5天预报</view>
+  <view class="weather-day-title">6天预报</view>
   <scroll-view scroll-y="true" class="weather-day-list">
-    <block wx:for="{{value.weathers}}" wx:key="index">
-      <view wx:if="{{index > 0 && index < value.weathers.length - 1}}" class="weather-day-item">
-        <view class="weather-day-date">{{item.week}}({{tools.subDate(item.date)}})</view>
-        <view class="weather-day-weather">{{item.weather}}</view>
-        <view class="weather-day-temp">{{item.temp_day_c}}℃ / {{item.temp_night_c}}℃</view>
+    <block wx:for="{{forecastDay}}" wx:key="index">
+      <view class="weather-day-item">
+        <view class="weather-day-date">{{item.predict_week}}</view>
+        <view class="weather-day-weather">{{item.weather_desc_day}}</view>
+        <view class="weather-day-temp">{{item.temp_high.value}}℃ / {{item.temp_low.value}}℃</view>
       </view>
     </block>
   </scroll-view>
 
-  <view class="life-index-title">生活指数</view>
-  <view class="life-index">
-    <view wx:for="{{value.indexes}}" wx:key="id" class="life-index-item">
-      <text class="life-index-level">{{item.level}}</text>
-      <text class="life-index-name">{{item.name}}</text>
-    </view>
+  <view class="sunset">日出日落</view>
+  <view style="width: 100%;" wx:if="{{weather.sunset.is_day === 1}}">
+    <view class="sundown">日落时间：{{weather.sunset.sundown}}</view>
+  </view>
+  <view style="width: 100%;" wx:else>
+    <view class="sunrise">日出时间：{{weather.sunset.sunrise}}</view>
   </view>
 </view>
