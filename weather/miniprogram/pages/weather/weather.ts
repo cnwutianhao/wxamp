@@ -226,9 +226,9 @@ Page({
 
     // 天气背景
     if (currentWeatherData.sunset.is_day === 1) {
-      that.data.image = `https://h5tq.moji.com/tianqi/assets/images/skin/day_${currentWeatherData.weather_desc_id}.jpg`;
+      that.data.image = `https://h5tq.moji.com/tianqi/assets/images/skin/day_${forecast_day[0].icon_day}.jpg`;
     } else {
-      that.data.image = `https://h5tq.moji.com/tianqi/assets/images/skin/night_${currentWeatherData.weather_desc_id}.jpg`;
+      that.data.image = `https://h5tq.moji.com/tianqi/assets/images/skin/night_${forecast_day[0].icon_day}.jpg`;
     }
 
     this.setData({
