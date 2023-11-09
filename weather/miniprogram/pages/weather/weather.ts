@@ -1,3 +1,8 @@
+interface WeatherImage {
+  day: string;
+  night: string;
+}
+
 interface CitySearchItem {
   cityId: string;
   name: string;
@@ -225,10 +230,47 @@ Page({
     const sunset = currentWeatherData.sunset;
 
     // 天气背景
-    if (currentWeatherData.sunset.is_day === 1) {
-      that.data.image = `https://h5tq.moji.com/tianqi/assets/images/skin/day_${forecast_day[0].icon_day}.jpg`;
+    const weatherImages: Record<string, WeatherImage> = {
+      晴: {
+        day: "https://h5tq.moji.com/tianqi/assets/images/skin/day_0.jpg",
+        night: "https://h5tq.moji.com/tianqi/assets/images/skin/night_0.jpg",
+      },
+      多云: {
+        day: "https://h5tq.moji.com/tianqi/assets/images/skin/day_1.jpg",
+        night: "https://h5tq.moji.com/tianqi/assets/images/skin/night_1.jpg",
+      },
+      阴: {
+        day: "https://h5tq.moji.com/tianqi/assets/images/skin/day_1.jpg",
+        night: "https://h5tq.moji.com/tianqi/assets/images/skin/night_1.jpg",
+      },
+      雨: {
+        day: "https://h5tq.moji.com/tianqi/assets/images/skin/day_3.jpg",
+        night: "https://h5tq.moji.com/tianqi/assets/images/skin/night_3.jpg",
+      },
+      雪: {
+        day: "https://h5tq.moji.com/tianqi/assets/images/skin/day_13.jpg",
+        night: "https://h5tq.moji.com/tianqi/assets/images/skin/night_13.jpg",
+      },
+      浮尘: {
+        day: "https://h5tq.moji.com/tianqi/assets/images/skin/day_20.jpg",
+        night: "https://h5tq.moji.com/tianqi/assets/images/skin/night_20.jpg",
+      },
+      霾: {
+        day: "https://h5tq.moji.com/tianqi/assets/images/skin/day_45.jpg",
+        night: "https://h5tq.moji.com/tianqi/assets/images/skin/night_45.jpg",
+      },
+    };
+    const isDay: boolean = currentWeatherData.sunset.is_day === 1;
+    const weatherDesc: string = currentWeatherData.weather_desc;
+    if (weatherImages.hasOwnProperty(weatherDesc)) {
+      const image: string = isDay
+        ? weatherImages[weatherDesc].day
+        : weatherImages[weatherDesc].night;
+      that.data.image = image;
     } else {
-      that.data.image = `https://h5tq.moji.com/tianqi/assets/images/skin/night_${forecast_day[0].icon_day}.jpg`;
+      that.data.image = isDay
+        ? weatherImages.晴.day
+        : weatherImages.晴.night;
     }
 
     this.setData({
